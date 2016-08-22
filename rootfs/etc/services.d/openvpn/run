@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+#exec s6-applyuidgid -u 2001 -g 2001 openvpn --config $OPENVPN_CONF_FILE
+exec sg vpn -c "openvpn --config $OPENVPN_CONF_FILE"

@@ -1,0 +1,15 @@
+#!/bin/bash
+if [[ ! -e $RESOLVCONF ]]; then
+  RESOLVCONF=/sbin/resolvconf
+  cat <<EOF > $RESOLVCONF
+#!/usr/bin/env bash
+conf=/etc/resolv.conf
+[[ -e $conf.orig ]] || cp -p $conf $conf.orig
+if [[ "${1:-""}" == "-a" ]]; then
+    cat >${conf}
+elif [[ "${1:-""}" == "-d" ]]; then
+    cat $conf.orig >$conf
+fi
+EOF
+  chmod +x $RESOLVCONF
+fi

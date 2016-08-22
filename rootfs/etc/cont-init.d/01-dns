@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+#setup openvpn client DNS
+dns() {
+  echo "# This updates the resolvconf with dns settings" >> $OPENVPN_CONF_FILE
+  echo "script-security 2" >> $OPENVPN_CONF_FILE
+  echo "up /etc/openvpn/update-resolv-conf" >> $OPENVPN_CONF_FILE
+  echo "down /etc/openvpn/update-resolv-conf" >> $OPENVPN_CONF_FILE
+}
+
+sed -i '/resolv-*conf/d; /script-security/d' $OPENVPN_CONF_FILE
+[[ "${DNS:-""}" ]] && dns

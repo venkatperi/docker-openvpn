@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bash
+#add a route back to your network, so that return traffic works
+return_route() {
+  local gw network="$1"
+  gw=$(ip route | awk '/default/ {print $3}')
+  ip route add to $network via $gw dev eth0
+}
+
+[[ "${ROUTE:-""}" ]] && return_route "$ROUTE"
